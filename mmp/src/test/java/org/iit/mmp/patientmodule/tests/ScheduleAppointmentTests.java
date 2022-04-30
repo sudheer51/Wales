@@ -20,8 +20,6 @@ public class ScheduleAppointmentTests  extends TestBase{
 	
 	String URL = "http://96.84.175.78/MMP-Release2-Integrated-Build.6.8.000/portal/login.php";
 	String filePath = System.getProperty("user.dir")+"\\data\\loginTestData.xls";
-	String doctorName = "Dr.Charlie";
-	
 	@Test(dataProvider = "testData", description="US_004 Schedule Appointment",groups={"US_004","regression","sanity","patientmodule"})
 	public void validateAppointmentDetails(String uName, String password) throws Exception, IOException {
 		
@@ -32,7 +30,7 @@ public class ScheduleAppointmentTests  extends TestBase{
 		helperObj.moduleNavigation("Schedule Appointment");
 		SAPage = new ScheduleAppointmentPage(driver);
 		SAPage.clickOnCreateAppointmentButton();
-		HashMap<String,String> hMap = SAPage.selectDoctor(doctorName);
+		HashMap<String,String> hMap = SAPage.selectDoctor("patientmodule");
 		SoftAssert sa = new SoftAssert();
 		sa.assertTrue(SAPage.validateAppointmentDetailsinHomePage(hMap));
 		sa.assertTrue(SAPage.validateAppointmentDetailsinSchedulePage(hMap));

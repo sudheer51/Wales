@@ -18,31 +18,29 @@ public class ScheduleAppointmentTests  extends TestBase{
 	HelperClass helperObj;
 	ScheduleAppointmentPage SAPage;
 	
-	String URL = "http://96.84.175.78/MMP-Release2-Integrated-Build.6.8.000/portal/login.php";
 	String filePath = System.getProperty("user.dir")+"\\data\\loginTestData.xls";
-	String doctorName = "Dr.Charlie";
 	
-	@Test(dataProvider = "testData", description="US_004 Schedule Appointment",groups={"US_004","regression","sanity","patientmodule"})
-	public void validateAppointmentDetails(String uName, String password) throws Exception, IOException {
+	@Test( description="US_004 Schedule Appointment",groups={"US_004","regression","sanity","patientmodule"})
+	public void validateAppointmentDetails() throws Exception, IOException {
 		
 		instantiateDriver();
 		helperObj=new HelperClass(driver);
-		helperObj.launchApplicationURL("http://96.84.175.78/MMP-Release2-Admin-Build.2.1.000/login.php");
+		helperObj.launchApplicationURL("adminmodule");
 		helperObj.captureScreenshot("US_001_LaunchApplication");
 		helperObj.adminLogin();
 		helperObj.captureScreenshot("US_002_verifyValidLogin");
 		helperObj.moduleNavigation("Patients");
 		
 		AdminPortalPage adminPortalPage=new AdminPortalPage(driver);
-		adminPortalPage.NavigatetoAndClickPatients();
+		helperObj.moduleNavigation("Patients");
 		adminPortalPage.searchforPatient("UserTest");
 		AdminHomePage adminhomePage=new AdminHomePage(driver);
 		adminhomePage.clickOnCreateVisit();
 		helperObj.captureScreenshot("US003_clickOnCreateVisit");
 		SAPage = new ScheduleAppointmentPage(driver);
 		 
-		HashMap<String,String> hMap=SAPage.selectDoctor(doctorName);
-		helperObj.launchApplicationURL("http://96.84.175.78/MMP-Release2-Integrated-Build.6.8.000/portal/login.php");
+		HashMap<String,String> hMap=SAPage.selectDoctor("adminmodule");
+		helperObj.launchApplicationURL("adminmodule");
 		helperObj.moduleNavigation("HOME");
 		SoftAssert sa=new SoftAssert();
 		sa.assertTrue(SAPage.validateAppointmentDetailsinHomePage(hMap),"");

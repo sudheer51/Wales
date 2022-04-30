@@ -1,7 +1,10 @@
 package org.iit.mmp.patientmodule.pages;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Properties;
 
+import org.iit.mmp.config.ProjectConfiguration;
 import org.iit.mmp.helper.HelperClass;
 import org.iit.mmp.utility.Utility;
 import org.openqa.selenium.By;
@@ -33,9 +36,12 @@ public class ScheduleAppointmentPage {
 		driver.findElement(createAppointmentButton).click();
 	}
 	
-	public HashMap<String, String> selectDoctor(String doctorName) throws InterruptedException
+	public HashMap<String, String> selectDoctor(String moduleName) throws InterruptedException, IOException
 	{
+		ProjectConfiguration pConfig = new ProjectConfiguration();	
+		Properties pro = pConfig.loadProperties(); 
 		HashMap<String,String> hMap= new HashMap<String,String>();
+		String doctorName = pro.getProperty("doctorName");
 		driver.findElement(By.xpath(doctorXpath.replace("%%doctorName%%", doctorName))).click();
 		driver = helperObj.switchToAFrameAvailable("myframe",20);
 		String dateOfAppointment = Utility.getFutureDate(20);
@@ -45,7 +51,18 @@ public class ScheduleAppointmentPage {
 		Thread.sleep(2000);
 		driver.findElement(okbutton).click();
 		String symptoms= "Booking an Appointment "+doctorName +"on date::"+dateOfAppointment+ "for symptom fever";
-		driver.findElement(symID).sendKeys(symptoms);
+		
+		if(moduleName.equals("patientmodule"))
+		{
+			driver.findElement(symID).sendKeys(symptoms);
+		}
+		else
+		{
+			symID=By.name("sym");
+			driver.findElement(symID).sendKeys(symptoms);
+		}
+		
+		 
 		driver.findElement(submitXpath).click();
 		hMap.put("dateOfAppointment", dateOfAppointment);
 		hMap.put("time", time);

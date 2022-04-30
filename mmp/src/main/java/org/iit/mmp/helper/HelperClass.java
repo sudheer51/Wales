@@ -23,9 +23,16 @@ public class HelperClass {
 
 	int i = 0;
 	WebDriver driver;
+	Properties pro;
 
 	public HelperClass(WebDriver driver){
-
+		ProjectConfiguration pConfig = new ProjectConfiguration();	
+		try {
+			pro = pConfig.loadProperties();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
 		this.driver = driver;
 
 	}
@@ -35,8 +42,17 @@ public class HelperClass {
 		driver.findElement(By.xpath("//span[contains(text(),'"+moduleName+"')]")).click();
 	}
 
-	public  void launchApplicationURL(String url)	{
+	public  void launchApplicationURL(String moduleName)	{
 
+		String url ;
+		if(moduleName.equals("adminmodule"))
+		{
+			url =pro.getProperty("adminPortalUrl") ;
+		}
+		else
+		{
+			url =pro.getProperty("patientPortalUrl") ;
+		}
 		driver.get(url);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -134,8 +150,7 @@ public class HelperClass {
 	}
 	public void patientLogin() throws IOException 
 	{
-		ProjectConfiguration pConfig = new ProjectConfiguration();	
-		Properties pro = pConfig.loadProperties();  
+	 
 		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(pro.getProperty("patientUser"));
 		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(pro.getProperty("patientPassword"));
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
