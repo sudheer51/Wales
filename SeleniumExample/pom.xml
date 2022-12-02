@@ -92,10 +92,10 @@
 				<version>3.3</version>
 				<configuration>
 
-					<fork> true </fork>
+				<!--	<fork> true </fork>
 					<executable>
 						C:\Program Files (x86)\Java\jdk1.8.0_191\bin\javac.exe
-					</executable>
+					</executable>-->
 
 					<source>1.8</source>
 					<target>1.8</target>
