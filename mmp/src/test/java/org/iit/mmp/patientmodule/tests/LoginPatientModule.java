@@ -14,7 +14,7 @@ import org.testng.asserts.SoftAssert;
 public class LoginPatientModule extends TestBase{
 
 	 
-	@Test(description="US_002_Login_Patient",groups={"US_002","regression","sanity","patientmodule"})
+	 
 	public void initiateBrowser() throws IOException
 	{
 		HelperClass helpObj = new HelperClass(driver);
@@ -26,7 +26,7 @@ public class LoginPatientModule extends TestBase{
 	@Test(dataProvider="testData", description="US_002_Login_Patient",groups={"US_002","regression","sanity","patientmodule"})
 	public void patientLogin(String username, String password) throws InterruptedException
 	{
-
+		intiateBrowser();
 		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(username);
 		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
 		driver.findElement(By.xpath("//*[@id=\"login\"]/form/p[6]/input")).click();
@@ -74,7 +74,7 @@ public class LoginPatientModule extends TestBase{
 		return data;
 	}
 
-	@Test(description="US_002_Login_Patient",groups={"US_002","regression","sanity","patientmodule"})
+	//@Test(description="US_002_Login_Patient",groups={"US_002","regression","sanity","patientmodule"})
 	public String alertHandler() throws InterruptedException
 	{
 
