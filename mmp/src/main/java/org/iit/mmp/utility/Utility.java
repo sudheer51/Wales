@@ -23,6 +23,11 @@ public class Utility {
 	static Random rand;
 	 static XSSFWorkbook workbook;
 	 static XSSFSheet sheet;
+
+	public static int getRandomNumber(int min, int max) {
+	    return (int) Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	
 	public static String generateRandom(int n,int range)
 	{
 		rand = new Random();
